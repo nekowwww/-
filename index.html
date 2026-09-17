@@ -93,16 +93,17 @@
     </div>
 
     <div class="label">
-      输入当前水果体重
+      输入初始水果重量
     </div>
 
-    <input
-      id="input"
-      class="input"
-      type="number"
-      inputmode="decimal"
-      placeholder="请输入数字"
-    >
+ <input
+  id="input"
+  class="input"
+  type="number"
+  inputmode="decimal"
+  placeholder="请输入数字"
+  onkeydown="handleKeyDown(event)"
+>
 
     <div id="result" class="result" style="display: none;">
       <div class="result-label">
@@ -139,6 +140,14 @@
       resultNumber.textContent = calculated + " 倍";
       result.style.display = "block";
     });
+function handleKeyDown(event) {
+  if (event.key === "Backspace" || event.key === "Delete") {
+    event.preventDefault();
+
+    input.value = "";
+    result.style.display = "none";
+  }
+}
   </script>
 
 </body>
