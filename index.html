@@ -4,12 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>菠萝农场巨大化计算器</title>
-
   <style>
     * {
       box-sizing: border-box;
     }
-
     body {
       margin: 0;
       min-height: 100vh;
@@ -19,7 +17,6 @@
                    sans-serif;
       color: #333333;
     }
-
     .container {
       min-height: 100vh;
       display: flex;
@@ -27,20 +24,17 @@
       align-items: center;
       padding: 70px 24px 30px;
     }
-
     .title {
       font-size: 26px;
       font-weight: 700;
       letter-spacing: 1px;
       margin-bottom: 50px;
     }
-
     .label {
       font-size: 15px;
       color: #777777;
       margin-bottom: 12px;
     }
-
     .input {
       width: 100%;
       max-width: 360px;
@@ -53,28 +47,23 @@
       text-align: center;
       outline: none;
     }
-
     .input:focus {
       border-color: #aaaaaa;
     }
-
     .result {
       margin-top: 55px;
       text-align: center;
     }
-
     .result-label {
       font-size: 15px;
       color: #777777;
       margin-bottom: 10px;
     }
-
     .result-number {
       font-size: 48px;
       font-weight: 700;
       letter-spacing: 1px;
     }
-
     .creator {
       margin-top: auto;
       padding-top: 60px;
@@ -83,72 +72,63 @@
     }
   </style>
 </head>
-
 <body>
-
   <div class="container">
-
     <div class="title">
       菠萝农场巨大化计算器
     </div>
-
     <div class="label">
       输入初始水果重量
     </div>
-
- <input
-  id="input"
-  class="input"
-  type="number"
-  inputmode="decimal"
-  placeholder="请输入数字"
-  onkeydown="handleKeyDown(event)"
->
-
+    <input
+      id="input"
+      class="input"
+      type="text"
+      inputmode="decimal"
+      placeholder="请输入数字"
+      onkeydown="handleKeyDown(event)"
+    >
     <div id="result" class="result" style="display: none;">
       <div class="result-label">
         目标倍数
       </div>
-
       <div id="resultNumber" class="result-number">
         0.00 倍
       </div>
     </div>
-
     <div class="creator">
       创作者：一蓑烟雨悬疑
+      （输入三位数自动添加小数点，例如输入139会自动变成1.39）
     </div>
-
   </div>
-
   <script>
     const input = document.getElementById("input");
     const result = document.getElementById("result");
     const resultNumber = document.getElementById("resultNumber");
-
     input.addEventListener("input", function () {
-      const value = input.value;
+      let value = input.value;
+      // 如果用户没有输入小数点，
+      // 且输入恰好是三位数字，则自动在第一位后加入小数点
+      if (/^\d{3}$/.test(value)) {
+        value = value[0] + "." + value.slice(1);
+        input.value = value;
+      }
       const num = Number(value);
-
       if (!value || num <= 0 || isNaN(num)) {
         result.style.display = "none";
         return;
       }
-
       const calculated = (5 / num).toFixed(2);
-
       resultNumber.textContent = calculated + " 倍";
       result.style.display = "block";
     });
-function handleKeyDown(event) {
-  if (event.key === "Backspace" || event.key === "Delete") {
-    event.preventDefault();
-
-    input.value = "";
-    result.style.display = "none";
-  }
-}
+    function handleKeyDown(event) {
+      if (event.key === "Backspace" || event.key === "Delete") {
+        event.preventDefault();
+        input.value = "";
+        result.style.display = "none";
+      }
+    }
   </script>
-
 </body>
 </html>
