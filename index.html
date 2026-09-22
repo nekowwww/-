@@ -110,6 +110,7 @@
       inputmode="decimal"
       placeholder="请输入数字"
       onkeydown="handleKeyDown(event)"
+      autofocus
     >
 
     <div id="result" class="result" style="display: none;">
@@ -135,6 +136,12 @@
     const input = document.getElementById("input");
     const result = document.getElementById("result");
     const resultNumber = document.getElementById("resultNumber");
+
+    // 页面加载完成后，主动把光标聚焦到输入框
+    // （autofocus 属性在部分浏览器/场景下可能不生效，这里再手动兜底一次）
+    window.addEventListener("load", function () {
+      input.focus();
+    });
 
     input.addEventListener("input", function () {
       let value = input.value;
@@ -172,5 +179,3 @@
 
 </body>
 </html>
-
-以上是我的原代码，请你在不修改我之前有的功能下，帮我添加我说的光标默认在输入框点开的功能
